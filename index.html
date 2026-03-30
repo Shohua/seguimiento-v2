@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo estoy siendo · Diario Personal</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<div class="container">
+  <header class="header">
+    <div class="header-mark"></div>
+    <h1>Cómo estoy <em>siendo</em> hoy</h1>
+    <p class="header-sub">Un momento tuyo. Sin presión, sin logros.<br>Solo tú, siendo honesto contigo.</p>
+    <div class="header-date" id="fecha-display">—</div>
+  </header>
+
+  <!-- ─── TABS ─── -->
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab active" id="tab-hoy" onclick="switchTab('hoy')">✦ Hoy</button>
+      <button class="tab" id="tab-hist" onclick="switchTab('historial')">Historial</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ HOY VIEW ═══════════ -->
+  <div id="view-hoy" class="view active">
+
+    <!-- RACHA -->
+    <div class="racha-card">
+      <div class="racha-top">
+        <div class="racha-left">
+          <div class="racha-flame" id="racha-flame">🌱</div>
+          <div>
+            <div class="racha-num" id="racha-num">0</div>
+            <div class="racha-label">
+              <strong id="racha-title">días seguidos</strong>
+              conectando contigo mismo
+            </div>
+          </div>
+        </div>
+        <div class="salvavidas-badge" id="sv-badge" title="Tienes salvavidas este mes — puedes saltarte hasta 2 días sin perder la racha">
+          🛟 <span id="sv-count">2</span> este mes
+        </div>
+      </div>
+      <div class="days-grid" id="days-grid"></div>
+    </div>
+
+    <!-- NOTICE si ya hay registro hoy -->
+    <div class="edit-notice" id="edit-notice">
+      <span>📝 <strong>Ya registraste hoy.</strong> Puedes editar tu entrada — se sobrescribirá al guardar.</span>
+    </div>
+
+    <!-- SECCIÓN 1: BIENESTAR -->
+    <div class="scard">
+      <div class="scard-title">
+        <div class="scard-icon">🪞</div>
+        <div>
+          <h2>Cómo me traté</h2>
+          <p>Lo esencial — la relación contigo mismo.</p>
+        </div>
+      </div>
+
+      <!-- Q1: Trato -->
+      <div class="qblock">
+        <div class="qlabel">¿Cómo fue mi trato hacia mí hoy?</div>
+        <div class="qhint">1 = muy duro, exigente, crítico · 5 = me traté como alguien a quien quiero</div>
+        <div class="scale-wrap">
+          <div class="scale-btns">
+            <button class="sbtn" onclick="selScale(this,'q1',1)">1</button>
+            <button class="sbtn" onclick="selScale(this,'q1',2)">2</button>
+            <button class="sbtn" onclick="selScale(this,'q1',3)">3</button>
+            <button class="sbtn" onclick="selScale(this,'q1',4)">4</button>
+            <button class="sbtn" onclick="selScale(this,'q1',5)">5</button>
+          </div>
+          <div class="scale-desc"><span>Muy duro conmigo</span><span>Me traté con cariño</span></div>
+        </div>
+      </div>
+
+      <!-- Q5: Juicio interno -->
+      <div class="qblock">
+        <div class="qlabel">¿Qué tan presente estuvo el juicio interno hoy?</div>
+        <div class="qhint">Esa voz de "no es suficiente" o "deberías más". ¿Qué tanto espacio ocupó?</div>
+        <div class="scale-wrap">
+          <div class="scale-btns">
+            <button class="sbtn" onclick="selScale(this,'q5',1)">1</button>
+            <button class="sbtn" onclick="selScale(this,'q5',2)">2</button>
+            <button class="sbtn" onclick="selScale(this,'q5',3)">3</button>
+            <button class="sbtn" onclick="selScale(this,'q5',4)">4</button>
+            <button class="sbtn" onclick="selScale(this,'q5',5)">5</button>
+          </div>
+          <div class="scale-desc"><span>Casi no apareció</span><span>Muy fuerte todo el día</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: PRESENCIA -->
+    <div class="scard">
+      <div class="scard-title">
+        <div class="scard-icon" style="background:var(--sage-pale)">🌿</div>
+        <div>
+          <h2>Presencia y disfrute</h2>
+          <p>¿Estuviste contigo hoy?</p>
+        </div>
+      </div>
+
+      <!-- Q2: Placer -->
+      <div class="qblock">
+        <div class="qlabel">¿Hice algo solo porque me daba gusto?</div>
+        <div class="qhint">Sin que tuviera que "servir" para algo. Leer, crear, caminar, lo que sea tuyo.</div>
+        <div class="yesno">
+          <button class="ybtn" onclick="selYN(this,'q2','Sí','yes')">Sí</button>
+          <button class="ybtn" onclick="selYN(this,'q2','Un poco','maybe')">Un poco</button>
+          <button class="ybtn" onclick="selYN(this,'q2','No','no')">No</button>
+        </div>
+      </div>
+
+      <!-- Q3: Cuerpo -->
+      <div class="qblock">
+        <div class="qlabel">¿Mi cuerpo se movió desde el cuidado?</div>
+        <div class="qhint">No desde la exigencia ni el castigo. Cualquier movimiento que hayas elegido para ti.</div>
+        <div class="yesno">
+          <button class="ybtn" onclick="selYN(this,'q3','Sí','yes')">Sí</button>
+          <button class="ybtn" onclick="selYN(this,'q3','Un poco','maybe')">Un poco</button>
+          <button class="ybtn" onclick="selYN(this,'q3','No me moví','no')">No me moví</button>
+        </div>
+      </div>
+
+      <!-- Q4: Conexión -->
+      <div class="qblock">
+        <div class="qlabel">¿Tuve una conexión genuina con alguien?</div>
+        <div class="qhint">Una conversación real, no de trámite. Que te haya hecho sentir presente o visto.</div>
+        <div class="yesno">
+          <button class="ybtn" onclick="selYN(this,'q4','Sí','yes')">Sí</button>
+          <button class="ybtn" onclick="selYN(this,'q4','No','no')">No</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: REFLEXIÓN -->
+    <div class="scard">
+      <div class="scard-title">
+        <div class="scard-icon" style="background:#F0EBF8">✍️</div>
+        <div>
+          <h2>Reflexión libre</h2>
+          <p>Opcional — lo que quieras dejar escrito.</p>
+        </div>
+      </div>
+
+      <!-- Q6: Lo que me gustó de mí -->
+      <div class="qblock">
+        <div class="qlabel">Algo que me gustó de mí hoy</div>
+        <div class="qhint">Puede ser muy pequeño. No tiene que ser un logro. Solo algo tuyo.</div>
+        <textarea class="qtextarea" id="q6" rows="3" placeholder="Escribe lo que venga…"></textarea>
+      </div>
+
+      <!-- AGRADECIMIENTOS -->
+      <div class="qblock">
+        <div class="qlabel">Tres cosas por las que estoy agradecido hoy</div>
+        <div class="qhint">La gratitud entrena el cerebro a notar lo bueno. Pueden ser mínimas.</div>
+        <textarea class="qtextarea" id="q7" rows="3" placeholder="1. …&#10;2. …&#10;3. …"></textarea>
+      </div>
+    </div>
+
+    <div class="save-row">
+      <button class="btn-save" onclick="guardar()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+        Guardar mi día
+      </button>
+    </div>
+
+  </div><!-- /view-hoy -->
+
+  <!-- ═══════════ HISTORIAL VIEW ═══════════ -->
+  <div id="view-historial" class="view">
+    <div class="hist-header">
+      <h2>Mi historial</h2>
+      <button class="btn-export" onclick="exportAll()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        Exportar todo (.txt)
+      </button>
+    </div>
+    <div id="hist-list">
+      <div class="hist-empty" id="hist-empty">Aún no hay registros.<br>Completa tu primer día. 🌱</div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
